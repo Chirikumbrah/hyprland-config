@@ -14,6 +14,7 @@ dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
 systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
 
 # Launch desktop portals
-~/.config/hypr/scripts/xdg-desktop-portal-hyprland
+~/.config/hypr/scripts/xdg-desktop-portal.sh
 
+# Start Hyprland WM
 exec Hyprland

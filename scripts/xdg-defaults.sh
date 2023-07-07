@@ -4,7 +4,7 @@ export IMAGE_VIEWER=qimgv
 export PDF_VIEWER=qpdfview
 export VIDEO_PLAYER=mpv
 export BROWSER=chromium
-export EXPLORER=pcmanfm-qt
+export EXPLORER=thunar
 
 # img/vid
 xdg-mime default $IMAGE_VIEWER.desktop 'image/jpg'

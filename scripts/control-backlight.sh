@@ -5,6 +5,13 @@ function backlight_notification {
     ICON_MEDIUM="/usr/share/icons/Papirus-Dark/symbolic/status/display-brightness-medium-symbolic.svg"
     ICON_HIGH="/usr/share/icons/Papirus-Dark/symbolic/status/display-brightness-high-symbolic.svg"
     BACKLIGHT=$(light -G | cut -f1 -d".")
+    if [ $BACKLIGHT -lt "34" ]; then
+        ICON=$ICON_LOW
+    elif [ $BACKLIGHT -lt "66" ]; then
+        ICON=$ICON_MEDIUM
+    else
+        ICON=$ICON_HIGH
+    fi
     dunstify -i "$ICON" -r 2594 -h int:value:"$BACKLIGHT" " Backlight: $BACKLIGHT%" -t 1000
 }
 

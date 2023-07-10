@@ -1,11 +1,21 @@
 #!/bin/bash
 
 function volume_notification {
-    volMuted="/usr/share/icons/Papirus-Dark/16x16/panel/volume-level-muted.svg"
-    volSound="/usr/share/icons/Papirus-Dark/16x16/panel/volume-level-high.svg"
+    volMuted="/usr/share/icons/Papirus-Dark/symbolic/status/audio-volume-muted-symbolic.svg"
+    volLow="/usr/share/icons/Papirus-Dark/16x16/panel/volume-level-low.svg"
+    volMedium="/usr/share/icons/Papirus-Dark/16x16/panel/volume-level-medium.svg"
+    volHigh="/usr/share/icons/Papirus-Dark/16x16/panel/volume-level-high.svg"
     VOL=$(pamixer --get-volume-human)
     VOL_LEVEL=$(pamixer --get-volume)
-    [ "$VOL" = "muted" ] || [ "$VOL" = "0%" ]  && VOL_ICON=$volMuted || VOL_ICON=$volSound
+    if [ "$VOL" = "muted" ]; then
+        VOL_ICON=$volMuted    	
+    elif [ "$VOL_LEVEL" -lt "35" ]; then
+        VOL_ICON=$volLow    	
+    elif [ "$VOL_LEVEL" -lt "70" ]; then
+        VOL_ICON=$volMedium    	
+    elif [ "$VOL_LEVEL" -le "100" ]; then
+        VOL_ICON=$volHigh    	
+    fi
     dunstify -i "$VOL_ICON" -r 2593 -h int:value:"$VOL_LEVEL" " Volume: $VOL_LEVEL%" -t 1000
 }
 
@@ -18,11 +28,11 @@ function is_mic_mute {
 }
 
 function mic_notification {
-    micMuted="/usr/share/icons/Papirus-Dark/16x16/panel/mic-off.svg"
-    micSound="/usr/share/icons/Papirus-Dark/16x16/panel/mic-on.svg"
+    MIC_MUTED="/usr/share/icons/Papirus-Dark/symbolic/status/microphone-sensitivity-muted-symbolic.svg"
+    MIC_HIGH="/usr/share/icons/Papirus-Dark/symbolic/status/microphone-sensitivity-high-symbolic.svg"
     MIC=$(pamixer --default-source --get-volume-human)
     MIC_LEVEL=$(pamixer --default-source --get-volume)
-    [ "$MIC" = "muted" ] || [ "$MIC" = "0%" ] && MIC_ICON=$micMuted || MIC_ICON=$micSound
+    [ "$MIC" = "muted" ] || [ "$MIC" = "0%" ] && MIC_ICON=$MIC_MUTED || MIC_ICON=$MIC_HIGH
     dunstify -i "$MIC_ICON" -r 25931 -h int:value:"$MIC_LEVEL" " Microphone: $MIC_LEVEL%" -t 1000
 }
 

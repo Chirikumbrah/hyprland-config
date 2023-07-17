@@ -1,5 +1,7 @@
 #!/bin/bash
 
+NOTIFICATION_CMD=dunstify
+
 function volume_notification {
     volMuted="/usr/share/icons/Papirus-Dark/symbolic/status/audio-volume-muted-symbolic.svg"
     volLow="/usr/share/icons/Papirus-Dark/16x16/panel/volume-level-low.svg"
@@ -16,7 +18,7 @@ function volume_notification {
     elif [ "$VOL_LEVEL" -le "100" ]; then
         VOL_ICON=$volHigh    	
     fi
-    dunstify -i "$VOL_ICON" -r 2593 -h int:value:"$VOL_LEVEL" " Volume: $VOL_LEVEL%" -t 1000
+    $NOTIFICATION_CMD -i "$VOL_ICON" -r 2593 -h int:value:"$VOL_LEVEL" " Volume: $VOL_LEVEL%" -t 1000
 }
 
 function get_mic_volume {
@@ -33,7 +35,7 @@ function mic_notification {
     MIC=$(pamixer --default-source --get-volume-human)
     MIC_LEVEL=$(pamixer --default-source --get-volume)
     [ "$MIC" = "muted" ] || [ "$MIC" = "0%" ] && MIC_ICON=$MIC_MUTED || MIC_ICON=$MIC_HIGH
-    dunstify -i "$MIC_ICON" -r 25931 -h int:value:"$MIC_LEVEL" " Microphone: $MIC_LEVEL%" -t 1000
+    $NOTIFICATION_CMD -i "$MIC_ICON" -r 25931 -h int:value:"$MIC_LEVEL" " Microphone: $MIC_LEVEL%" -t 1000
 }
 
 case $1 in

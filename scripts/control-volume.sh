@@ -10,13 +10,13 @@ function volume_notification {
     VOL=$(pamixer --get-volume-human)
     VOL_LEVEL=$(pamixer --get-volume)
     if [ "$VOL" = "muted" ]; then
-        VOL_ICON=$volMuted    	
+        VOL_ICON=$volMuted
     elif [ "$VOL_LEVEL" -lt "35" ]; then
-        VOL_ICON=$volLow    	
+        VOL_ICON=$volLow
     elif [ "$VOL_LEVEL" -lt "70" ]; then
-        VOL_ICON=$volMedium    	
+        VOL_ICON=$volMedium
     elif [ "$VOL_LEVEL" -le "100" ]; then
-        VOL_ICON=$volHigh    	
+        VOL_ICON=$volHigh
     fi
     $NOTIFICATION_CMD -i "$VOL_ICON" -r 2593 -h int:value:"$VOL_LEVEL" " Volume: $VOL_LEVEL%" -t 1000
 }
@@ -26,7 +26,7 @@ function get_mic_volume {
 }
 
 function is_mic_mute {
-    amixer get Capture | grep off > /dev/null
+    amixer get Capture | grep off >/dev/null
 }
 
 function mic_notification {
@@ -39,20 +39,20 @@ function mic_notification {
 }
 
 case $1 in
-    up)
-        pamixer -i 5
-        volume_notification &
-        ;;
-    down)
-        pamixer -d 5
-        volume_notification &
-        ;;
-    mute)
-        pamixer -t
-        volume_notification &
-        ;;
-    mic)
-        pamixer --default-source -t
-        mic_notification &
-        ;;
+up)
+    pamixer -i 5
+    volume_notification &
+    ;;
+down)
+    pamixer -d 5
+    volume_notification &
+    ;;
+mute)
+    pamixer -t
+    volume_notification &
+    ;;
+mic)
+    pamixer --default-source -t
+    mic_notification &
+    ;;
 esac

@@ -1,12 +1,12 @@
 #!/bin/bash
 
 APP=$1
-WORKSPACE=$2
+CLASS=$2
+WORKSPACE=$3
 
-if $(hyprctl clients | rg -q "class: $APP"); then
+if $(hyprctl clients | rg -q "class: $CLASS"); then
 	hyprctl dispatch workspace "$WORKSPACE" 
 else
 	hyprctl dispatch exec "$APP"
-	hyprctl dispatch workspace "$WORKSPACE" 
 fi
 

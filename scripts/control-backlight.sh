@@ -1,5 +1,7 @@
 #!/bin/bash
 
+NOTIFICATION_CMD=dunstify
+
 function backlight_notification {
     ICON_LOW="/usr/share/icons/Papirus-Dark/symbolic/status/display-brightness-low-symbolic.svg"
     ICON_MEDIUM="/usr/share/icons/Papirus-Dark/symbolic/status/display-brightness-medium-symbolic.svg"
@@ -12,7 +14,7 @@ function backlight_notification {
     else
         ICON=$ICON_HIGH
     fi
-    dunstify -i "$ICON" -r 2594 -h int:value:"$BACKLIGHT" " Backlight: $BACKLIGHT%" -t 1000
+    $NOTIFICATION_CMD -i "$ICON" -r 2594 -h int:value:"$BACKLIGHT" " Backlight: $BACKLIGHT%" -t 1000
 }
 
 case $1 in

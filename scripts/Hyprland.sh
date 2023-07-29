@@ -1,8 +1,5 @@
 #!/bin/sh
 
-# Start polkit agent
-/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
-
 # Init keyring
 eval "$(gnome-keyring-daemon --start --components=gpg,pkcs11,secrets,ssh)"
 

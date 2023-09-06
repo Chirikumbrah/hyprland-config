@@ -1,13 +1,16 @@
 #!/bin/bash
 
 APP=$1
-SECONDS=$2
+WORKSPACE_NAME=$2
 
-if $(hyprctl clients | rg -q "$APP"); then
-	hyprctl dispatch togglespecialworkspace "$APP"
+windows_in() {
+    hyprctl clients -j | jq ".[] | select(.workspace.name == \"special:$WORKSPACE_NAME\" )"
+}
+
+WINDOWS=$(windows_in "$WORKSPACE_NAME")
+
+if [ -z "$WINDOWS" ]; then
+    hyprctl dispatch exec [ workspace special:"$WORKSPACE_NAME" ] "$APP"
 else
-	hyprctl dispatch exec [ workspace special:"$APP" ] "$APP" 
-	sleep "$SECONDS"
-	hyprctl dispatch togglespecialworkspace "$APP"
+    hyprctl dispatch togglespecialworkspace "$WORKSPACE_NAME"
 fi
-

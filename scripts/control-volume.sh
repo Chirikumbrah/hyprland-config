@@ -40,11 +40,11 @@ function mic_notification {
 
 case $1 in
 up)
-    pamixer -i 5
+    pamixer -i 2
     volume_notification &
     ;;
 down)
-    pamixer -d 5
+    pamixer -d 2
     volume_notification &
     ;;
 mute)
